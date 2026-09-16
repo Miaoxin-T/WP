@@ -1,0 +1,2378 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Worldpanel Onboarding Portal</title>
+    <style>
+:root {
+  --navy: #07324a;
+  --navy-2: #0c3f5c;
+  --teal: #08b4bd;
+  --teal-dark: #008f98;
+  --ink: #0e1726;
+  --muted: #66758a;
+  --line: #dde5eb;
+  --soft: #f3f7fa;
+  --pale: #e9f8f8;
+  --paper: #ffffff;
+  --amber: #c58b20;
+  --shadow: 0 14px 32px rgba(14, 23, 38, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--soft);
+  font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+  line-height: 1.6;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) auto auto;
+  gap: 24px;
+  align-items: center;
+  min-height: 104px;
+  padding: 20px clamp(20px, 3vw, 40px);
+  color: white;
+  background: var(--navy);
+  border-bottom: 4px solid var(--teal);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-mark {
+  display: grid;
+  width: 50px;
+  height: 50px;
+  place-items: center;
+  color: white;
+  background: var(--teal);
+  border-radius: 7px;
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.brand strong,
+.brand em {
+  display: block;
+}
+
+.brand strong {
+  font-size: 25px;
+  line-height: 1.15;
+}
+
+.brand small {
+  color: #c5d3dd;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.brand em {
+  color: var(--teal);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.nav-pills {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  padding: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.nav-pills button,
+.reference-link,
+.back-home {
+  color: #e8f1f4;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+}
+
+.nav-pills button {
+  min-height: 42px;
+  padding: 0 14px;
+  font-weight: 850;
+}
+
+.nav-pills button.active,
+.nav-pills button:hover {
+  color: white;
+  border-color: var(--teal);
+  background: var(--teal);
+}
+
+.reference-link {
+  padding: 10px 16px;
+  white-space: nowrap;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.language-switch {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.language-switch button {
+  min-width: 42px;
+  min-height: 34px;
+  padding: 0 10px;
+  color: #cfe0e6;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  font-weight: 800;
+}
+
+.language-switch button.active,
+.language-switch button:hover {
+  color: white;
+  background: var(--teal);
+}
+
+main {
+  padding: 50px clamp(16px, 3vw, 40px) 64px;
+}
+
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
+.hero-card {
+  position: relative;
+  min-height: 615px;
+  overflow: hidden;
+  padding: clamp(40px, 6vw, 72px);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 920px;
+}
+
+.eyebrow {
+  margin: 0 0 22px;
+  color: var(--teal-dark);
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.eyebrow span {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin-right: 10px;
+  vertical-align: -4px;
+  background: var(--teal);
+  border-radius: 50%;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+.hero-card h1 {
+  margin-bottom: 24px;
+  font-size: clamp(50px, 7vw, 86px);
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+.hero-card p:not(.eyebrow) {
+  max-width: 770px;
+  color: var(--muted);
+  font-size: 22px;
+}
+
+.hero-search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 870px;
+  min-height: 70px;
+  margin-top: 36px;
+  padding: 0 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fbfcfd;
+}
+
+.hero-search span {
+  color: #92a0b2;
+  font-size: 30px;
+}
+
+.hero-search input,
+.inline-input,
+.question-form input,
+.question-form textarea {
+  width: 100%;
+  min-width: 0;
+  color: var(--ink);
+  border: 0;
+  outline: 0;
+  background: transparent;
+}
+
+.quick-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 12px;
+  color: #8a96a8;
+}
+
+.quick-suggestions button {
+  padding: 5px 12px;
+  color: #27415a;
+  border: 0;
+  border-radius: 7px;
+  background: #eef2f6;
+}
+
+.hero-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ring {
+  position: absolute;
+  top: 58px;
+  right: 58px;
+  width: 138px;
+  height: 138px;
+  border: 18px solid var(--teal);
+  border-radius: 50%;
+}
+
+.angle {
+  position: absolute;
+  top: 240px;
+  right: 96px;
+  width: 74px;
+  height: 74px;
+  border-top: 14px solid var(--navy);
+  border-left: 14px solid var(--navy);
+}
+
+.dot {
+  position: absolute;
+  right: -34px;
+  bottom: 128px;
+  width: 122px;
+  height: 122px;
+  background: linear-gradient(90deg, var(--teal) 0 42%, #edf3f8 42%);
+  border-radius: 50%;
+}
+
+.home-section {
+  margin-top: 42px;
+}
+
+.section-heading {
+  margin-bottom: 24px;
+}
+
+.section-heading h2,
+.center-heading h2 {
+  margin-bottom: 4px;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.15;
+}
+
+.section-heading p,
+.center-heading p,
+.muted {
+  color: var(--muted);
+}
+
+.portal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 34px;
+}
+
+.portal-card,
+.content-card,
+.info-panel {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.portal-card {
+  min-height: 300px;
+  padding: 36px;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.portal-card:hover,
+.portal-card:focus {
+  border-color: var(--teal);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+  outline: 0;
+}
+
+.portal-icon {
+  display: grid;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 24px;
+  place-items: center;
+  color: var(--teal);
+  background: var(--pale);
+  border-radius: 11px;
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.portal-card h3 {
+  margin-bottom: 12px;
+  font-size: 26px;
+  line-height: 1.25;
+}
+
+.portal-card p {
+  color: var(--muted);
+  font-size: 18px;
+}
+
+.portal-card strong {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--teal-dark);
+  font-size: 17px;
+}
+
+.workspace-view {
+  padding-top: 8px;
+}
+
+.workspace-hero {
+  position: relative;
+  margin-bottom: 48px;
+  padding: 34px 36px;
+  color: white;
+  background: var(--navy);
+  border-radius: 16px;
+  border-bottom: 8px solid var(--teal);
+  box-shadow: var(--shadow);
+}
+
+.workspace-hero .eyebrow {
+  margin-bottom: 8px;
+  color: var(--teal);
+}
+
+.workspace-hero h1 {
+  margin-bottom: 8px;
+  font-size: clamp(34px, 5vw, 48px);
+  line-height: 1.15;
+}
+
+.workspace-hero p:not(.eyebrow) {
+  max-width: 1060px;
+  color: #d9e6ec;
+  font-size: 19px;
+}
+
+.back-home {
+  position: absolute;
+  top: 50%;
+  right: 34px;
+  min-height: 48px;
+  padding: 0 18px;
+  transform: translateY(-50%);
+  font-weight: 850;
+}
+
+.content-card {
+  padding: clamp(22px, 4vw, 52px);
+  box-shadow: var(--shadow);
+}
+
+.center-heading {
+  max-width: 1040px;
+  margin: 0 auto 28px;
+  text-align: center;
+}
+
+.tab-list,
+.segmented,
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 34px;
+}
+
+.tab-list button,
+.segmented button,
+.filter-row button {
+  min-height: 52px;
+  padding: 0 24px;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: white;
+  font-weight: 850;
+}
+
+.tab-list button.active,
+.segmented button.active,
+.filter-row button.active {
+  color: white;
+  border-color: var(--teal);
+  background: var(--teal);
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 28px;
+  margin-top: 28px;
+}
+
+.info-panel {
+  min-width: 0;
+  padding: 28px;
+}
+
+.info-panel.highlight {
+  border-color: var(--teal);
+  background: #f2fbfb;
+}
+
+.inline-input {
+  min-height: 48px;
+  margin: 12px 0;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: white;
+}
+
+.list-stack,
+.category-tree,
+.timeline {
+  display: grid;
+  gap: 10px;
+}
+
+.list-item,
+.tree-item,
+.timeline-step,
+.resource-card,
+.contact-card,
+.question-card,
+.fact {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: white;
+}
+
+.list-item,
+.tree-item,
+.timeline-step,
+.fact {
+  padding: 14px;
+}
+
+.tree-item strong {
+  color: var(--teal-dark);
+}
+
+.fact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.fact span {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.timeline-step {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  text-align: left;
+  cursor: pointer;
+}
+
+.timeline-step.active {
+  border-color: var(--teal);
+  background: #f2fbfb;
+}
+
+.timeline-step span {
+  display: grid;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  color: white;
+  background: var(--navy);
+  border-radius: 8px;
+  font-weight: 900;
+}
+
+.workflow-grid {
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+}
+
+.resource-grid,
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.resource-card,
+.contact-card,
+.question-card {
+  padding: 20px;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.tag {
+  display: inline-flex;
+  min-height: 25px;
+  align-items: center;
+  padding: 3px 9px;
+  color: var(--teal-dark);
+  background: var(--pale);
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.qa-grid {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+}
+
+.section-heading.compact {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.contact-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.question-form {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: #f7fafc;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.question-form input,
+.question-form textarea {
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: white;
+}
+
+.question-form textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.question-form button {
+  justify-self: start;
+  min-height: 44px;
+  padding: 0 18px;
+  color: white;
+  border: 0;
+  border-radius: 10px;
+  background: var(--teal-dark);
+  font-weight: 850;
+}
+
+.copy-button {
+  min-height: 38px;
+  margin: 4px 0 10px;
+  padding: 0 14px;
+  color: var(--teal-dark);
+  border: 1px solid var(--teal);
+  border-radius: 9px;
+  background: #f2fbfb;
+  font-weight: 850;
+}
+
+.copy-button:hover {
+  color: white;
+  background: var(--teal);
+}
+
+.empty {
+  padding: 18px;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  background: white;
+}
+
+@media (max-width: 1180px) {
+  .topbar {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-pills {
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+
+  .reference-link {
+    justify-self: start;
+  }
+
+  .header-actions {
+    justify-content: flex-start;
+  }
+
+  .back-home {
+    position: static;
+    margin-top: 18px;
+    transform: none;
+  }
+}
+
+@media (max-width: 860px) {
+  main {
+    padding: 24px 16px 44px;
+  }
+
+  .topbar {
+    min-height: auto;
+    padding: 16px;
+  }
+
+  .hero-card {
+    min-height: auto;
+    padding: 34px 24px;
+  }
+
+  .hero-card h1 {
+    font-size: 42px;
+  }
+
+  .hero-card p:not(.eyebrow) {
+    font-size: 18px;
+  }
+
+  .hero-shapes {
+    display: none;
+  }
+
+  .portal-grid,
+  .two-column,
+  .workflow-grid,
+  .qa-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resource-grid,
+  .contact-grid,
+  .fact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-card {
+    min-height: auto;
+    padding: 24px;
+  }
+
+  .section-heading.compact {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+</style>
+  </head>
+  <body>
+    <div id="app" class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#home" data-target-view="home" aria-label="返回首页门户" data-i18n-aria="brandHome">
+          <span class="brand-mark">WP</span>
+          <span>
+            <strong>Worldpanel <small>by Numerator</small></strong>
+            <em data-i18n="brandTagline">A CTR SERVICE IN CHINA · 内部新人自驱上岗门户</em>
+          </span>
+        </a>
+        <nav class="nav-pills" aria-label="主导航" data-i18n-aria="mainNavigation">
+          <button type="button" data-target-view="home" data-i18n="navHome">首页门户</button>
+          <button type="button" data-target-view="panels" data-i18n="navPanels">1. 公司 Panel 架构</button>
+          <button type="button" data-target-view="workflow" data-i18n="navWorkflow">2. 业务流转流程</button>
+          <button type="button" data-target-view="learning" data-i18n="navLearning">3. 核心学习资料</button>
+          <button type="button" data-target-view="qa" data-i18n="navQa">4. 答疑解惑论坛</button>
+        </nav>
+        <div class="header-actions">
+          <div id="languageSwitch" class="language-switch" role="group" aria-label="语言切换" data-i18n-aria="languageSwitch">
+            <button type="button" class="active" data-language="zh">中文</button>
+            <button type="button" data-language="en">EN</button>
+          </div>
+          <a class="reference-link" href="https://worldpanelbynumerator.com/" target="_blank" rel="noreferrer" data-i18n="officialReference">官网风格参考</a>
+        </div>
+      </header>
+
+      <main>
+        <section id="portalHome" class="view active" data-view="home">
+          <div class="hero-card">
+            <div class="hero-copy">
+              <p class="eyebrow"><span></span> Worldpanel by Numerator Onboarding Portal</p>
+              <h1 data-i18n-html="heroTitle">深度洞察消费者，<br />塑造品牌未来</h1>
+              <p data-i18n="heroDescription">
+                纽锐拓消费者指数介绍呈献：快速上手工作、明确品类客户流传、解答跑数疑难。
+                这里是新入职同仁自驱动上岗的一站式知识大本营。
+              </p>
+              <label class="hero-search">
+                <span>⌕</span>
+                <input id="globalSearch" type="search" placeholder="搜索工作流、消费者样组、核心文档、负责人（如：HHP、DICC、PV、罗微）..." data-i18n-placeholder="globalSearch" />
+              </label>
+              <div class="quick-suggestions" aria-label="快捷入口" data-i18n-aria="quickSuggestionsAria">
+                <span data-i18n="quickSuggestions">快捷入口 / Quick Suggestions:</span>
+                <button type="button" data-search-term="HHP" data-i18n="quickHhp">HHP样组</button>
+                <button type="button" data-search-term="对内流程" data-i18n="quickInternal" data-i18n-search="quickInternalSearch">对内流程</button>
+                <button type="button" data-search-term="数据修改" data-i18n="quickChanges" data-i18n-search="quickChangesSearch">数据修改4步骤</button>
+                <button type="button" data-search-term="马丽" data-i18n="quickDicc" data-i18n-search="quickDiccSearch">马丽 DICC</button>
+                <button type="button" data-search-term="PV" data-i18n="quickPv">PV 跑数</button>
+                <button type="button" data-search-term="Shopper" data-i18n="quickShopper">Shopper报告</button>
+              </div>
+            </div>
+            <div class="hero-shapes" aria-hidden="true">
+              <span class="ring"></span>
+              <span class="angle"></span>
+              <span class="dot"></span>
+            </div>
+          </div>
+
+          <section class="home-section" id="corePortals">
+            <div class="section-heading">
+              <h2 data-i18n="corePortalsTitle">四大核心业务板块 / Core Portals</h2>
+              <p data-i18n="corePortalsDescription">点击下方对应板块入口，直接跳转功能区研究详细内容与实操步骤。</p>
+            </div>
+            <div id="portalCards" class="portal-grid">
+              <article class="portal-card" data-target-view="panels" tabindex="0">
+                <span class="portal-icon">▣</span>
+                <h3 data-i18n="panelCardTitle">1. 公司 Panel 架构及核心覆盖</h3>
+                <p data-i18n="panelCardDescription">深入理解家庭样组(HHP)、生鲜样组(Fresh Food Panel)、户外消费(OOH)、婴儿(Baby Panel / KidsP)、美妆(BTP)、Usage 和 Comtech 七大消费者样组属性，内置品类合作客户快速检索。</p>
+                <strong data-i18n="panelCardAction">进入该板块探索 Panel 详情 →</strong>
+              </article>
+              <article class="portal-card" data-target-view="workflow" tabindex="0">
+                <span class="portal-icon">⌘</span>
+                <h3 data-i18n="workflowCardTitle">2. 业务流转流程与实操工作大盘</h3>
+                <p data-i18n="workflowCardDescription">解析端到端大流程：从 DICC、生产需求单、Operations 跑数、PV/WPO 数据库到 Sanity Check 校验与客户口径交付。</p>
+                <strong data-i18n="workflowCardAction">查看对内及对外流转节点 →</strong>
+              </article>
+              <article class="portal-card" data-target-view="learning" tabindex="0">
+                <span class="portal-icon">□</span>
+                <h3 data-i18n="learningCardTitle">3. 核心工具资料与内网公盘目录</h3>
+                <p data-i18n="learningCardDescription">汇总学习中心 / 云学堂、生产需求单模板、WPO 文档、新品确认平台，以及 CTR 发布的行业趋势 Shopper 研究。</p>
+                <strong data-i18n="learningCardAction">前往公盘资源中心 →</strong>
+              </article>
+              <article class="portal-card" data-target-view="qa" tabindex="0">
+                <span class="portal-icon">◌</span>
+                <h3 data-i18n="qaCardTitle">4. 答疑解惑论坛及行业 Expert 分布</h3>
+                <p data-i18n="qaCardDescription">公开各样组负责对接人和 Expert 老师，内置讨论区，新同事可以沉淀问题并快速找到负责人。</p>
+                <strong data-i18n="qaCardAction">向 Expert 及 AI 顾问提问 →</strong>
+              </article>
+            </div>
+          </section>
+        </section>
+
+        <section class="view workspace-view" data-view="panels">
+          <div class="workspace-hero">
+            <p class="eyebrow">Onboarding Workhub · Workspace</p>
+            <h1 data-i18n="panelsHeroTitle">1. 公司消费者样组(Panel)属性架构</h1>
+            <p data-i18n="panelsHeroDescription">为您深入呈现家庭样组(HHP)、生鲜样组(Fresh Food Panel)、户外消费(OOH)、婴儿(Baby Panel / KidsP)、美妆(BTP)、Usage 和 Comtech 七大消费者样组。</p>
+            <button type="button" class="back-home" data-target-view="home" data-i18n="backHome">← 返回门户首页</button>
+          </div>
+          <section class="content-card">
+            <div class="center-heading">
+              <h2 data-i18n="panelsSectionTitle">公司 Panel 架构及核心覆盖</h2>
+              <p data-i18n="panelsSectionDescription">Worldpanel by Numerator 通过科学且具代表性的连续性消费者样组，真实还原消费习惯，赋能快消零售决策。</p>
+            </div>
+            <div id="panelList" class="tab-list"></div>
+            <div class="two-column">
+              <div id="panelDetail" class="info-panel"></div>
+              <div class="info-panel">
+                <h3 data-i18n="clientsTitle">当前精品合作客户代表 / Covered Representative Clients</h3>
+                <p class="muted" data-i18n="clientsDescription">PPT 未提供完整客户映射，初版先放明确示例，后续可在数据表中持续补充。</p>
+                <input id="clientSearch" class="inline-input" type="search" placeholder="搜索客户品牌、母公司、品类..." data-i18n-placeholder="clientSearch" />
+                <div id="clientList" class="list-stack"></div>
+              </div>
+            </div>
+            <div class="two-column">
+              <div class="info-panel">
+                <h3 data-i18n="categoryTree">品类树</h3>
+                <div id="categoryTree" class="category-tree"></div>
+              </div>
+              <div class="info-panel">
+                <h3 data-i18n="panelFacts">Panel 快速事实</h3>
+                <div id="panelFacts" class="fact-grid"></div>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section class="view workspace-view" data-view="workflow">
+          <div class="workspace-hero">
+            <p class="eyebrow">Workflow · Ways of Working</p>
+            <h1 data-i18n="workflowHeroTitle">2. 业务流转流程与实操工作大盘</h1>
+            <p data-i18n="workflowHeroDescription">对内看 DICC、生产需求单、RP、PV/WPO 到数据交付；对外看客户 request 到数据交付和反馈闭环。</p>
+            <button type="button" class="back-home" data-target-view="home" data-i18n="backHome">← 返回门户首页</button>
+          </div>
+          <section class="content-card">
+            <div class="segmented" role="tablist">
+              <button type="button" class="active" data-workflow-type="internal" data-i18n="internalWorkflow">对内流程</button>
+              <button type="button" data-workflow-type="external" data-i18n="externalWorkflow">对外流程</button>
+            </div>
+            <div class="two-column workflow-grid">
+              <div id="workflowSteps" class="timeline"></div>
+              <div id="workflowDetail" class="info-panel"></div>
+            </div>
+          </section>
+        </section>
+
+        <section class="view workspace-view" data-view="learning">
+          <div class="workspace-hero">
+            <p class="eyebrow">Learning Library · Resources</p>
+            <h1 data-i18n="learningHeroTitle">3. 核心工具资料与内网公盘目录</h1>
+            <p data-i18n="learningHeroDescription">工具资料解决“怎么做”，Insight 资料解决“怎么看、怎么讲出洞察”。</p>
+            <button type="button" class="back-home" data-target-view="home" data-i18n="backHome">← 返回门户首页</button>
+          </div>
+          <section class="content-card">
+            <div class="filter-row">
+              <button type="button" class="active" data-resource-group="all" data-i18n="allResources">全部</button>
+              <button type="button" data-resource-group="tool" data-i18n="toolResources">工具资料</button>
+              <button type="button" data-resource-group="insight" data-i18n="insightResources">Insight 提升</button>
+              <input id="resourceSearch" class="inline-input" type="search" placeholder="搜索资料、标签、路径..." data-i18n-placeholder="resourceSearch" />
+            </div>
+            <div id="resourceList" class="resource-grid"></div>
+          </section>
+        </section>
+
+        <section class="view workspace-view" data-view="qa">
+          <div class="workspace-hero">
+            <p class="eyebrow">Ask & Connect · Expert Map</p>
+            <h1 data-i18n="qaHeroTitle">4. 答疑解惑论坛及行业 Expert 分布</h1>
+            <p data-i18n="qaHeroDescription">先找到负责人，再把问题沉淀成可复用答案。初版提问保存在当前浏览器。</p>
+            <button type="button" class="back-home" data-target-view="home" data-i18n="backHome">← 返回门户首页</button>
+          </div>
+          <section class="content-card">
+            <div class="two-column qa-grid">
+              <div>
+                <div class="section-heading compact">
+                  <h2 data-i18n="contactIndex">负责人索引</h2>
+                  <input id="contactSearch" class="inline-input" type="search" placeholder="搜索负责人、领域、工具..." data-i18n-placeholder="contactSearch" />
+                </div>
+                <div id="contactList" class="contact-grid"></div>
+              </div>
+              <div>
+                <div class="section-heading compact">
+                  <h2>Q&A</h2>
+                  <select id="questionStatus" class="inline-input">
+                    <option value="all" data-i18n="allStatuses">全部状态</option>
+                    <option value="pending" data-i18n="pendingStatus">待回答</option>
+                    <option value="answered" data-i18n="answeredStatus">已回答</option>
+                    <option value="update" data-i18n="updateStatus">需更新</option>
+                  </select>
+                </div>
+                <form id="questionForm" class="question-form">
+                  <input id="questionTitle" required placeholder="问题标题" data-i18n-placeholder="questionTitle" />
+                  <textarea id="questionBody" required placeholder="描述你的问题、Panel、品类、客户或数据背景" data-i18n-placeholder="questionBody"></textarea>
+                  <button type="submit" data-i18n="submitQuestion">提交问题</button>
+                </form>
+                <div id="questionList" class="list-stack"></div>
+              </div>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+    <script>
+window.portalData = {
+  panels: [
+    {
+      id: "hhp",
+      shortName: "HHP",
+      name: "家庭购买样组",
+      englishName: "Household Panel",
+      sample: "62,000 样本家庭户",
+      projection: "投射 2.73 亿城镇家庭",
+      collection: "个人智能手机（问卷宝 APP），连续记录真实购买行为",
+      cycle: "连续（年）/ 每天",
+      cities: "384 城市，K/A/B/C/D/E",
+      coverage: "快消品，线上/线下/O2O/礼赠全渠道",
+      profileDimensions: ["Family Size", "Income", "Life Stage"],
+      summary: "通过具有代表性的固定连续样本，记录家庭真实购买行为，支持品类、品牌、渠道、区域和人群分析。",
+    },
+    {
+      id: "fresh",
+      shortName: "Fresh",
+      name: "生鲜样组",
+      englishName: "Fresh Food Panel",
+      parentPanelId: "hhp",
+      sample: "HHP 生鲜扫描样本组（资料未列独立样本量）",
+      projection: "HHP 家庭生鲜购买行为",
+      collection: "由符合生鲜样组要求的 HHP 样本持续扫描生鲜消费",
+      cycle: "连续记录",
+      cities: "沿用 HHP 样本覆盖",
+      coverage: "家庭生鲜食品购买",
+      summary: "生鲜样组是 HHP 中需要扫描生鲜消费的样本组，用于观察家庭对新鲜食品的真实购买行为。",
+    },
+    {
+      id: "ooh",
+      shortName: "OOH",
+      name: "户外消费样组",
+      englishName: "Out-of-Home Panel",
+      sample: "17,200 样本",
+      projection: "投射 3.33 亿城镇个人",
+      collection: "手机记录户外饮品、食品消费",
+      cycle: "连续（年）/ 每天",
+      cities: "1-5 线城镇",
+      coverage: "户外饮品、食品、购买场所、消费场景和消费原因",
+      summary: "关注消费者在家外购买与消费的行为，覆盖茶饮、咖啡、便利店、餐饮、自动贩卖机等场景。",
+    },
+    {
+      id: "kidsp",
+      shortName: "KidsP",
+      name: "婴儿样组",
+      englishName: "Baby Panel",
+      sample: "6,000 网外样本，含 HHP 来源",
+      projection: "婴幼儿相关消费研究",
+      collection: "线上问卷和样本记录",
+      cycle: "月度",
+      cities: "384 城市，K/A/B/C/D",
+      coverage: "婴幼儿食品和用品",
+      summary: "服务婴幼儿品类的持续购买行为观察，支持婴童奶粉、食品、保健品、纸尿裤、护肤品等研究。",
+    },
+    {
+      id: "btp",
+      shortName: "BTP",
+      name: "美妆购买样组",
+      englishName: "Beauty Panel",
+      sample: "约 11,000 网外样本，部分同时合作 OOH",
+      projection: "美妆与个护消费者",
+      collection: "线上问卷和购买记录",
+      cycle: "月度",
+      cities: "核心城市覆盖",
+      coverage: "面部护肤、彩妆、护发、身体护理等",
+      summary: "追踪美妆个护购买行为，适合分析品牌、渠道、价格带、细分功效和消费者画像。",
+    },
+    {
+      id: "usage",
+      shortName: "Usage",
+      name: "个人使用样组",
+      englishName: "Usage Panel",
+      sample: "6,000 样本",
+      projection: "个人护理品使用行为",
+      collection: "线上问卷",
+      cycle: "月度",
+      cities: "核心城市覆盖",
+      coverage: "美妆、个人护理品和使用场景",
+      summary: "补充购买之外的使用视角，帮助理解使用场景、频次和体验。",
+    },
+    {
+      id: "comtech",
+      shortName: "Comtech",
+      name: "移动通讯样组",
+      englishName: "Comtech",
+      sample: "约 15,000 样本",
+      projection: "电子产品与移动通讯消费者",
+      collection: "线上问卷",
+      cycle: "月度",
+      cities: "核心城市覆盖",
+      coverage: "电子产品与移动通讯相关研究",
+      summary: "聚焦通讯和电子产品消费者行为，适合移动终端与相关服务研究。",
+    },
+  ],
+  categories: [
+    { id: "food", panelId: "hhp", parentId: null, name: "食品", description: "家庭购买样组中的食品大类" },
+    { id: "snack", panelId: "hhp", parentId: "food", name: "休闲食品", description: "坚果、糖巧、膨化、饼干、糕点等" },
+    { id: "biscuit", panelId: "hhp", parentId: "snack", name: "饼干", description: "HHP 食品 > 休闲食品下的饼干品类" },
+    { id: "beverage", panelId: "hhp", parentId: null, name: "饮料", description: "包装水、果汁、RTD 茶、咖啡、功能饮料等" },
+    { id: "beauty-care", panelId: "btp", parentId: null, name: "护肤彩妆", description: "面部护肤、彩妆、身体护理等" },
+    { id: "ooh-drink", panelId: "ooh", parentId: null, name: "户外饮品", description: "茶饮、咖啡、包装水、功能饮料等" },
+  ],
+  clients: [
+    {
+      id: "oreo",
+      name: "奥利奥",
+      company: "亿滋",
+      panelIds: ["hhp"],
+      categoryIds: ["biscuit"],
+      notes: "用户明确示例：HHP panel 下饼干品类客户。",
+      ownerId: "hd-luowei",
+    },
+    {
+      id: "placeholder-biscuit",
+      name: "待补充饼干客户",
+      company: "待补充",
+      panelIds: ["hhp"],
+      categoryIds: ["biscuit"],
+      notes: "PPT 未包含完整客户映射，后续可继续维护。",
+      ownerId: "hd-luowei",
+    },
+  ],
+  workflows: [
+    {
+      id: "internal",
+      type: "internal",
+      title: "对内流程：从 DICC 到 PV/WPO 与数据交付",
+      summary: "将 DICC、生产需求单、RP、PV/WPO 和数据交付串成新人可理解的内部链路。",
+      steps: [
+        {
+          title: "确认修改范围或生产需求",
+          input: "客户或商务提出的品类、字段、购买记录或趋势调整需求。",
+          action: "确认需求是否影响现有报告、是否需要所有相关商务同意，BTP 需求需考虑统计师认可。",
+          output: "明确的问题定义、影响范围和后续责任组。",
+          tools: ["Category champion 名单", "邮件确认"],
+        },
+        {
+          title: "查看 DICC / 产品定义 / Improvement",
+          input: "品类名称、条码、品牌、字段或细分。",
+          action: "查看 DICC 字段、产品定义和 Improvement 文档，确认字段来源于产品包装信息。",
+          output: "可用于生产需求单和数据修改的准确定义。",
+          tools: ["DICC", "产品定义", "Improvement"],
+        },
+        {
+          title: "填写生产需求单和 Itemlist",
+          input: "品类定义、层级关系、关键词、特殊规则。",
+          action: "列明细分名称，注明层级关系、抓取信息、中文名称和启用 P 次或时间。",
+          output: "可交给 RP/生产使用的生产需求单。",
+          tools: ["生产需求单模板", "Itemlist"],
+        },
+        {
+          title: "DICC 修改品类数据",
+          input: "已确认的字段定义、新编码和应用时间段。",
+          action: "调整 DICC 设置，上传 DICC 新码和 QC，提供 Relink & Recode 表。",
+          output: "完成品类 DICC 修改。",
+          tools: ["DICC", "Relink & Recode"],
+        },
+        {
+          title: "RP 生产 PV/WPO 数据库",
+          input: "生产需求单、PV 包、合同或测试审批。",
+          action: "转换数据格式，核对 Purchase 记录条数，生产并检查 PV/WPO 数据。",
+          output: "PV 线下数据库或 WPO 线上数据库。",
+          tools: ["PV", "WPO", "GCD"],
+        },
+        {
+          title: "拉取数据、可视化和交付",
+          input: "生产完成的数据库和分析需求。",
+          action: "拉数、做可视化、解释结果并准备交付材料。",
+          output: "面向业务或客户的交付内容。",
+          tools: ["PV", "报告模板", "可视化工具"],
+        },
+      ],
+    },
+    {
+      id: "external",
+      type: "external",
+      title: "对外流程：从客户 request 到交付反馈",
+      summary: "流程细节待后续 PPT 补充，初版先固化从客户需求确认到交付反馈的关键动作。",
+      steps: [
+        {
+          title: "接到客户 request",
+          input: "客户邮件、会议纪要或口头需求。",
+          action: "记录客户想回答的商业问题，不急于直接拉数。",
+          output: "需求摘要。",
+          tools: ["邮件", "会议纪要"],
+        },
+        {
+          title: "Confirm 清楚业务问题",
+          input: "客户 request。",
+          action: "确认目标、决策场景、输出格式、时间要求和是否有历史口径。",
+          output: "确认后的业务问题。",
+          tools: ["需求确认清单"],
+        },
+        {
+          title: "判断可行性和交付形式",
+          input: "确认后的业务问题和交付时间。",
+          action: "判断是否已有数据库、是否需要生产、是否要报价或协调运作。",
+          output: "交付路径和时间表。",
+          tools: ["Help Desk", "RP Calendar"],
+        },
+        {
+          title: "拉取数据",
+          input: "确认口径和数据库。",
+          action: "按口径拉取数据并保留口径记录。",
+          output: "分析底表。",
+          tools: ["PV", "WPO", "Data Explorer"],
+        },
+        {
+          title: "复核和解释",
+          input: "分析底表。",
+          action: "检查数值、趋势、层级加和和异常点，并把数据翻译成业务语言。",
+          output: "可解释的数据结论。",
+          tools: ["Sanity Check", "QC 清单"],
+        },
+        {
+          title: "输出交付",
+          input: "复核后的结论。",
+          action: "制作图表、邮件或 PPT，标注口径和限制。",
+          output: "客户交付材料。",
+          tools: ["PPT", "Excel", "可视化工具"],
+        },
+        {
+          title: "跟进反馈",
+          input: "客户反馈或追问。",
+          action: "记录追问，判断是否需要补数、改口径或沉淀 FAQ。",
+          output: "闭环记录和可复用经验。",
+          tools: ["Q&A", "项目记录"],
+        },
+      ],
+    },
+  ],
+  resources: [
+    {
+      id: "learning-center",
+      title: "学习中心 / 云学堂",
+      group: "tool",
+      description: "新人优先查看的云学堂学习中心入口，包含培训课程和基础操作资料。",
+      path: "https://ctr.yunxuetang.cn/kng/#/video/play?kngId=5943bf66-6bf8-4394-84cb-fc832b207d02&projectId=&btid=&gwnlUrl=",
+      tags: ["云学堂", "学习中心", "新人培训"],
+      level: "新人",
+    },
+    {
+      id: "prod-template",
+      title: "生产需求单模板",
+      group: "tool",
+      description: "用于填写 Itemlist、层级关系、定义、关键词和特殊规则。",
+      path: "网链集锦 / 生产需求模板",
+      tags: ["生产需求单", "Itemlist", "PV"],
+      level: "新人",
+    },
+    {
+      id: "wpo-faq",
+      title: "WPO 报告的生产与常见问题",
+      group: "tool",
+      description: "PPT 提到的 WPO 生产和常见问题文档。",
+      path: "WPO 报告的生产与常见问题-to cs",
+      tags: ["WPO", "报告", "常见问题"],
+      level: "进阶",
+    },
+    {
+      id: "new-product-platform",
+      title: "新品确认平台",
+      group: "tool",
+      description: "查看当期写入 DICC 的新品，进行检索、批量确认和反馈。",
+      path: "http://10.20.12.221:8099/UI/Login.aspx?url=/UI/DICCUserList.aspx",
+      tags: ["DICC", "新品", "内网"],
+      level: "进阶",
+    },
+    {
+      id: "shopper-report",
+      title: "Shopper Report / 公盘行业趋势报告",
+      group: "insight",
+      description: "提升 insight 表达能力，学习如何从购买行为讲出业务故事。",
+      path: "公盘 / Shopper report / 行业趋势",
+      tags: ["Insight", "Shopper", "案例"],
+      level: "进阶",
+    },
+    {
+      id: "public-drive-copy",
+      title: "Insight 公盘复制链接",
+      group: "insight",
+      description: "一键复制公盘路径，方便在资源管理器或企业微信中打开 Shopper report、行业趋势和优秀案例目录。",
+      path: "公盘 / Shopper report / 行业趋势 / 优秀案例",
+      copyPath: "公盘\\Shopper report\\行业趋势\\优秀案例",
+      tags: ["公盘", "Shopper", "复制链接"],
+      level: "新人",
+    },
+    {
+      id: "growth-formula-kpi",
+      title: "Growth Formula 与 KPI 含义",
+      group: "insight",
+      description: "增长公式把销售或消费增长拆成三类驱动：Penetration（买家数）、Purchase Frequency（购买频次）和 Basket Size / Volume per Trip（单次购买量）。",
+      path: "CTS_KWP Growth Formula-KPI implication Crossey du SH_May_2023.pptx",
+      tags: ["Growth Formula", "KPI", "Penetration", "Frequency"],
+      level: "新人",
+    },
+    {
+      id: "panel-works",
+      title: "Consumer Panel 如何工作",
+      group: "insight",
+      description: "解释 Consumer Panel 是固定、连续、具代表性的样本；包括 Universe、Sample、Stratified Sampling、代表性、Pickup study 和常见客户质疑。",
+      path: "CTS_2020_How Panel works_Panel Development by Joanne.pptx",
+      tags: ["Panel", "Sample", "Pickup", "代表性"],
+      level: "新人",
+    },
+    {
+      id: "new-product-improvement",
+      title: "新品确认平台与 Improvement",
+      group: "tool",
+      description: "说明新品确认平台的待处理、已处理、综合查询、权限开通、VPN 访问，以及 Improvement 如何记录 DICC 字段和编码规则变化。",
+      path: "新品确认平台&Improvement培训--20260421新模板.pptx",
+      tags: ["新品确认平台", "Improvement", "DICC", "VPN"],
+      level: "进阶",
+    },
+    {
+      id: "kpi-guide",
+      title: "核心 KPI 学习",
+      group: "insight",
+      description: "理解 Penetration、Frequency、Spend、Volume、Price、Trip、AWP、Heavy/Medium/Light Buyer 等指标。",
+      path: "学习资料 / KPI 解释",
+      tags: ["KPI", "指标", "分析"],
+      level: "新人",
+    },
+  ],
+  contacts: [
+    {
+      id: "hd-luowei",
+      name: "罗微",
+      role: "HD Manager / 常规咨询与问卷收集",
+      areas: ["商务日常问题咨询", "PanelSmart 问卷更新", "Help Desk"],
+      contact: "Helpdesk 罗微",
+    },
+    {
+      id: "gcd-liuqian",
+      name: "刘倩",
+      role: "GCD 中国区大使",
+      areas: ["GCD 数据报告", "协调和交付"],
+      contact: "通过 HD / GCD 流程联系",
+    },
+    {
+      id: "category-liuyiran",
+      name: "刘一然",
+      role: "品类新建 / 改造",
+      areas: ["品类改造报价", "接收 DICC 改造需求"],
+      contact: "liuyiran@ctrchina.cn",
+    },
+    {
+      id: "category-team",
+      name: "品类需求小组",
+      role: "品类需求运作处理小组",
+      areas: ["品类改造", "需求评估", "时间表"],
+      contact: "kwpopinlei@CTRCHINA.CN",
+    },
+    {
+      id: "dicc-mali",
+      name: "马丽",
+      role: "DICC 主管",
+      areas: ["DICC 规则", "产品定义", "品类字段"],
+      contact: "DICC 规则相关问题",
+    },
+    {
+      id: "dp-chenjin",
+      name: "陈瑾",
+      role: "DP 经理",
+      areas: ["Data Process", "DICC/DP 管理"],
+      contact: "DP 相关升级问题",
+    },
+    {
+      id: "platform-zhangzhirong",
+      name: "张志荣",
+      role: "新品确认平台联络",
+      areas: ["平台权限", "下载上限", "DICC 新品确认"],
+      contact: "平台问题联络人",
+    },
+    {
+      id: "rp-team",
+      name: "RP 组",
+      role: "Report Production",
+      areas: ["PV/WPO 数据库生产", "生产需求单", "数据库 QC"],
+      contact: "通过生产流程或 HD 协调",
+    },
+  ],
+  questions: [
+    {
+      id: "q1",
+      title: "HHP 饼干品类下奥利奥应如何映射？",
+      body: "初版按用户确认示例映射到 HHP > 食品 > 休闲食品 > 饼干。",
+      answer: "客户为奥利奥，母公司为亿滋。后续完整客户表可在 data.js clients 中继续维护。",
+      status: "已回答",
+      tags: ["HHP", "客户映射", "饼干"],
+      answeredById: "hd-luowei",
+    },
+    {
+      id: "q2",
+      title: "DICC 修改后多久可以提供 PV？",
+      body: "Operation training PPT 提到通常 Editing 拿到 DICC 已完成的修改需求后，数据调整 + 提供 PV 需要 7 个工作日。",
+      answer: "特殊情况需要结合需求量和紧急程度计划时间表。",
+      status: "已回答",
+      tags: ["DICC", "PV", "Editing"],
+      answeredById: "rp-team",
+    },
+    {
+      id: "q3",
+      title: "Consumer Panel 和 Retail Audit 有什么区别？",
+      body: "客户常会拿零售审计、出货或 Nielsen 数据与 Panel 数据对比。",
+      answer: "Retail Audit 通过门店追踪销售，Consumer Panel 通过家庭/个人购买者追踪 buyer behavior。Panel 的优势是能回答谁买、渗透率、忠诚度、复购和 repertoire；零售审计更擅长门店销售、价格、促销和铺货。",
+      status: "已回答",
+      tags: ["Retail Audit", "Consumer Panel", "数据差异"],
+      answeredById: "dp-chenjin",
+    },
+    {
+      id: "q4",
+      title: "客户说我们的销量和他们出货不一致，怎么解释？",
+      body: "Panel purchase data 与 shipment / ex-factory 数据可能不一致。",
+      answer: "先确认 Universe、渠道、地区、时间和单位是否一致，再看 Pickup 是否稳定。Pickup 研究建议用 rolling basis，例如 3/6/12 个月或 52 周滚动；差异可能来自 pipeline stock、平行进出口、批发跨区、户外消费、渠道覆盖或样本误差。",
+      status: "已回答",
+      tags: ["Pickup", "Shipment", "Ex-factory"],
+      answeredById: "dp-chenjin",
+    },
+    {
+      id: "q5",
+      title: "细分数据什么时候不建议直接解读？",
+      body: "新人常想把数据切到很细的省份、渠道、品牌或 SKU。",
+      answer: "Panel works 培训里提醒要关注 sample size 和 observations。经验上可参考 100 observations guideline；观察数越多越稳定，Penetration 这类变量通常比购买量更稳定。低样本或低渗透品牌需要谨慎解读趋势。",
+      status: "已回答",
+      tags: ["100 observations", "Penetration", "样本稳定性"],
+      answeredById: "rp-team",
+    },
+  ],
+};
+
+</script>
+<script>
+window.portalDataEn = {
+  panels: [
+    {
+      id: "hhp",
+      shortName: "HHP",
+      name: "Household Purchase Panel",
+      englishName: "Household Panel",
+      sample: "62,000 sample households",
+      projection: "Projects to 273 million urban households",
+      collection: "Continuous real-purchase recording via the Wenjuanbao mobile app",
+      cycle: "Continuous / Daily",
+      cities: "384 cities across K/A/B/C/D/E tiers",
+      coverage: "FMCG across online, offline, O2O, and gifting channels",
+      profileDimensions: ["Family Size", "Income", "Life Stage"],
+      summary: "A fixed, representative continuous sample that records actual household purchases and supports category, brand, channel, regional, and shopper analysis.",
+    },
+    {
+      id: "fresh",
+      shortName: "Fresh",
+      name: "Fresh Food Panel",
+      englishName: "Fresh Food Panel",
+      parentPanelId: "hhp",
+      sample: "Fresh-food scanning subgroup within HHP; no separate sample size stated",
+      projection: "Fresh-food purchasing behavior among HHP households",
+      collection: "Eligible HHP households continuously scan fresh-food purchases",
+      cycle: "Continuous",
+      cities: "Uses HHP sample coverage",
+      coverage: "Household fresh-food purchases",
+      summary: "The Fresh Food Panel is the HHP subgroup required to scan fresh-food purchases, enabling observation of actual household buying behavior in fresh categories.",
+    },
+    {
+      id: "ooh",
+      shortName: "OOH",
+      name: "Out-of-Home Panel",
+      englishName: "Out-of-Home Panel",
+      sample: "17,200 panelists",
+      projection: "Projects to 333 million urban individuals",
+      collection: "Mobile recording of out-of-home beverage and food consumption",
+      cycle: "Continuous / Daily",
+      cities: "Tier 1-5 urban markets",
+      coverage: "Out-of-home drinks, food, purchase locations, consumption occasions, and motivations",
+      summary: "Tracks purchasing and consumption away from home across tea shops, coffee shops, convenience stores, restaurants, vending machines, and other occasions.",
+    },
+    {
+      id: "kidsp",
+      shortName: "KidsP",
+      name: "Baby Panel",
+      englishName: "Baby Panel",
+      sample: "6,000 off-panel samples, including HHP-sourced samples",
+      projection: "Infant and baby-related consumption",
+      collection: "Online questionnaires and panelist records",
+      cycle: "Monthly",
+      cities: "384 cities across K/A/B/C/D tiers",
+      coverage: "Infant and baby food and products",
+      summary: "Continuously observes purchases in baby categories, supporting research on formula, food, supplements, diapers, skincare, and related products.",
+    },
+    {
+      id: "btp",
+      shortName: "BTP",
+      name: "Beauty Purchase Panel",
+      englishName: "Beauty Panel",
+      sample: "Approximately 11,000 off-panel samples; some also participate in OOH",
+      projection: "Beauty and personal-care consumers",
+      collection: "Online questionnaires and purchase records",
+      cycle: "Monthly",
+      cities: "Core city coverage",
+      coverage: "Facial skincare, makeup, haircare, body care, and more",
+      summary: "Tracks beauty and personal-care purchasing for analysis by brand, channel, price tier, benefit segment, and consumer profile.",
+    },
+    {
+      id: "usage",
+      shortName: "Usage",
+      name: "Personal Usage Panel",
+      englishName: "Usage Panel",
+      sample: "6,000 panelists",
+      projection: "Personal-care product usage behavior",
+      collection: "Online questionnaires",
+      cycle: "Monthly",
+      cities: "Core city coverage",
+      coverage: "Beauty, personal-care products, and usage occasions",
+      summary: "Adds the usage perspective beyond purchase, helping teams understand occasions, frequency, and experience.",
+    },
+    {
+      id: "comtech",
+      shortName: "Comtech",
+      name: "Mobile Communications Panel",
+      englishName: "Comtech",
+      sample: "Approximately 15,000 panelists",
+      projection: "Electronics and mobile-communications consumers",
+      collection: "Online questionnaires",
+      cycle: "Monthly",
+      cities: "Core city coverage",
+      coverage: "Electronics and mobile-communications research",
+      summary: "Focuses on communications and electronics consumer behavior for mobile devices and related services.",
+    },
+  ],
+  categories: [
+    { id: "food", panelId: "hhp", parentId: null, name: "Food", description: "Food categories within the Household Purchase Panel" },
+    { id: "snack", panelId: "hhp", parentId: "food", name: "Snacks", description: "Nuts, confectionery, puffed snacks, biscuits, pastries, and more" },
+    { id: "biscuit", panelId: "hhp", parentId: "snack", name: "Biscuits", description: "The biscuit category under HHP > Food > Snacks" },
+    { id: "beverage", panelId: "hhp", parentId: null, name: "Beverages", description: "Packaged water, juice, RTD tea, coffee, functional drinks, and more" },
+    { id: "beauty-care", panelId: "btp", parentId: null, name: "Skincare & Makeup", description: "Facial skincare, makeup, body care, and more" },
+    { id: "ooh-drink", panelId: "ooh", parentId: null, name: "Out-of-Home Drinks", description: "Tea drinks, coffee, packaged water, functional drinks, and more" },
+  ],
+  clients: [
+    {
+      id: "oreo",
+      name: "Oreo",
+      company: "Mondelez",
+      panelIds: ["hhp"],
+      categoryIds: ["biscuit"],
+      notes: "Confirmed example: an HHP client within the biscuit category.",
+      ownerId: "hd-luowei",
+    },
+    {
+      id: "placeholder-biscuit",
+      name: "Additional biscuit client",
+      company: "To be added",
+      panelIds: ["hhp"],
+      categoryIds: ["biscuit"],
+      notes: "The supplied slides do not include a complete client mapping; this list can be maintained as more information becomes available.",
+      ownerId: "hd-luowei",
+    },
+  ],
+  workflows: [
+    {
+      id: "internal",
+      type: "internal",
+      title: "Internal Workflow: From DICC to PV/WPO and Data Delivery",
+      summary: "Connects DICC, the production request form, RP, PV/WPO, and delivery into a practical internal workflow for new joiners.",
+      steps: [
+        {
+          title: "Confirm the change scope or production request",
+          input: "A category, field, purchase-record, or trend-adjustment request from a client or commercial team.",
+          action: "Confirm whether existing reports are affected, whether all relevant commercial teams must agree, and whether BTP requests require statistician approval.",
+          output: "A clear problem definition, impact scope, and accountable downstream team.",
+          tools: ["Category champion list", "Email confirmation"],
+        },
+        {
+          title: "Review DICC / Product Definition / Improvement",
+          input: "Category name, barcode, brand, field, or segment.",
+          action: "Review DICC fields, product definitions, and Improvement documents, confirming which fields come from product-pack information.",
+          output: "Accurate definitions ready for the production request form and data changes.",
+          tools: ["DICC", "Product Definition", "Improvement"],
+        },
+        {
+          title: "Complete the Production Request Form and Itemlist",
+          input: "Category definitions, hierarchy, keywords, and special rules.",
+          action: "List segment names and document hierarchy, captured information, Chinese labels, and the activation period or date.",
+          output: "A production request form ready for RP / production.",
+          tools: ["Production request template", "Itemlist"],
+        },
+        {
+          title: "Update category data in DICC",
+          input: "Approved field definitions, new codes, and applicable periods.",
+          action: "Adjust DICC settings, upload new DICC codes and QC materials, and provide the Relink & Recode table.",
+          output: "Completed category changes in DICC.",
+          tools: ["DICC", "Relink & Recode"],
+        },
+        {
+          title: "RP produces the PV/WPO database",
+          input: "Production request form, PV package, and contract or test approval.",
+          action: "Convert data formats, reconcile Purchase record counts, and produce and check PV/WPO data.",
+          output: "A PV offline database or WPO online database.",
+          tools: ["PV", "WPO", "GCD"],
+        },
+        {
+          title: "Extract, visualize, and deliver data",
+          input: "The completed database and analysis request.",
+          action: "Extract data, create visualizations, interpret results, and prepare delivery materials.",
+          output: "A business- or client-ready deliverable.",
+          tools: ["PV", "Report templates", "Visualization tools"],
+        },
+      ],
+    },
+    {
+      id: "external",
+      type: "external",
+      title: "External Workflow: From Client Request to Delivery and Feedback",
+      summary: "Captures the essential actions from clarifying a client request through delivery and feedback; further detail can be added from later training slides.",
+      steps: [
+        {
+          title: "Receive the client request",
+          input: "A client email, meeting note, or verbal request.",
+          action: "Record the business question the client wants to answer before beginning data extraction.",
+          output: "A request summary.",
+          tools: ["Email", "Meeting notes"],
+        },
+        {
+          title: "Confirm the business question",
+          input: "The client request.",
+          action: "Confirm the objective, decision context, output format, deadline, and whether a historical definition exists.",
+          output: "A confirmed business question.",
+          tools: ["Request confirmation checklist"],
+        },
+        {
+          title: "Assess feasibility and delivery format",
+          input: "The confirmed business question and delivery deadline.",
+          action: "Determine whether a database already exists, whether production is needed, and whether pricing or Operations coordination is required.",
+          output: "A delivery route and timetable.",
+          tools: ["Help Desk", "RP Calendar"],
+        },
+        {
+          title: "Extract data",
+          input: "The confirmed definition and database.",
+          action: "Extract data according to the agreed definition and retain a record of that definition.",
+          output: "An analysis base table.",
+          tools: ["PV", "WPO", "Data Explorer"],
+        },
+        {
+          title: "Validate and interpret",
+          input: "The analysis base table.",
+          action: "Check values, trends, hierarchy totals, and outliers, then translate the findings into business language.",
+          output: "Interpretable data conclusions.",
+          tools: ["Sanity Check", "QC checklist"],
+        },
+        {
+          title: "Prepare and deliver the output",
+          input: "Validated conclusions.",
+          action: "Create charts, email, or a presentation and document definitions and limitations.",
+          output: "Client delivery materials.",
+          tools: ["PowerPoint", "Excel", "Visualization tools"],
+        },
+        {
+          title: "Follow up on feedback",
+          input: "Client feedback or follow-up questions.",
+          action: "Record follow-ups and determine whether additional data, a changed definition, or a reusable FAQ entry is needed.",
+          output: "A closed-loop record and reusable learning.",
+          tools: ["Q&A", "Project records"],
+        },
+      ],
+    },
+  ],
+  resources: [
+    {
+      id: "learning-center",
+      title: "Learning Center / Yunxuetang",
+      group: "tool",
+      description: "The first stop for new joiners, with training courses and foundational operating materials.",
+      path: "https://ctr.yunxuetang.cn/kng/#/video/play?kngId=5943bf66-6bf8-4394-84cb-fc832b207d02&projectId=&btid=&gwnlUrl=",
+      tags: ["Yunxuetang", "Learning Center", "Onboarding"],
+      level: "New Joiner",
+    },
+    {
+      id: "prod-template",
+      title: "Production Request Form Template",
+      group: "tool",
+      description: "Used to document the Itemlist, hierarchy, definitions, keywords, and special rules.",
+      path: "Internal links / Production request template",
+      tags: ["Production Request", "Itemlist", "PV"],
+      level: "New Joiner",
+    },
+    {
+      id: "wpo-faq",
+      title: "WPO Production and FAQ",
+      group: "tool",
+      description: "The WPO production and frequently asked questions document referenced in the training slides.",
+      path: "WPO 报告的生产与常见问题-to cs",
+      tags: ["WPO", "Reports", "FAQ"],
+      level: "Advanced",
+    },
+    {
+      id: "new-product-platform",
+      title: "New Product Confirmation Platform",
+      group: "tool",
+      description: "Search, batch-confirm, and provide feedback on new products written into DICC for the current period.",
+      path: "http://10.20.12.221:8099/UI/Login.aspx?url=/UI/DICCUserList.aspx",
+      tags: ["DICC", "New Products", "Intranet"],
+      level: "Advanced",
+    },
+    {
+      id: "shopper-report",
+      title: "Shopper Report / Industry Trend Reports",
+      group: "insight",
+      description: "Build insight storytelling skills by learning how to turn purchase behavior into a business narrative.",
+      path: "Public Drive / Shopper report / Industry Trends",
+      tags: ["Insight", "Shopper", "Cases"],
+      level: "Advanced",
+    },
+    {
+      id: "public-drive-copy",
+      title: "Copy Insight Public-Drive Path",
+      group: "insight",
+      description: "Copy the public-drive path for quick access to Shopper reports, industry trends, and best-practice cases.",
+      path: "Public Drive / Shopper report / Industry Trends / Best Cases",
+      copyPath: "公盘\\Shopper report\\行业趋势\\优秀案例",
+      tags: ["Public Drive", "Shopper", "Copy Path"],
+      level: "New Joiner",
+    },
+    {
+      id: "growth-formula-kpi",
+      title: "Growth Formula and KPI Implications",
+      group: "insight",
+      description: "The growth formula breaks sales or consumption growth into Penetration, Purchase Frequency, and Basket Size / Volume per Trip.",
+      path: "CTS_KWP Growth Formula-KPI implication Crossey du SH_May_2023.pptx",
+      tags: ["Growth Formula", "KPI", "Penetration", "Frequency"],
+      level: "New Joiner",
+    },
+    {
+      id: "panel-works",
+      title: "How Consumer Panels Work",
+      group: "insight",
+      description: "Explains fixed, continuous, representative consumer panels, including Universe, Sample, Stratified Sampling, representation, Pickup studies, and frequent client questions.",
+      path: "CTS_2020_How Panel works_Panel Development by Joanne.pptx",
+      tags: ["Panel", "Sample", "Pickup", "Representation"],
+      level: "New Joiner",
+    },
+    {
+      id: "new-product-improvement",
+      title: "New Product Confirmation Platform and Improvement",
+      group: "tool",
+      description: "Covers pending and completed items, combined search, access setup, VPN access, and how Improvement records changes to DICC fields and coding rules.",
+      path: "新品确认平台&Improvement培训--20260421新模板.pptx",
+      tags: ["New Product Platform", "Improvement", "DICC", "VPN"],
+      level: "Advanced",
+    },
+    {
+      id: "kpi-guide",
+      title: "Core KPI Learning",
+      group: "insight",
+      description: "Understand Penetration, Frequency, Spend, Volume, Price, Trip, AWP, and Heavy/Medium/Light Buyer metrics.",
+      path: "Learning Materials / KPI Guide",
+      tags: ["KPI", "Metrics", "Analysis"],
+      level: "New Joiner",
+    },
+  ],
+  contacts: [
+    {
+      id: "hd-luowei",
+      name: "Luo Wei",
+      role: "HD Manager / General Enquiries and Questionnaire Collection",
+      areas: ["Daily commercial enquiries", "PanelSmart questionnaire updates", "Help Desk"],
+      contact: "Help Desk - Luo Wei",
+    },
+    {
+      id: "gcd-liuqian",
+      name: "Liu Qian",
+      role: "GCD China Ambassador",
+      areas: ["GCD data reports", "Coordination and delivery"],
+      contact: "Contact through the HD / GCD workflow",
+    },
+    {
+      id: "category-liuyiran",
+      name: "Liu Yiran",
+      role: "Category Creation / Renovation",
+      areas: ["Category renovation quotation", "DICC renovation requests"],
+      contact: "liuyiran@ctrchina.cn",
+    },
+    {
+      id: "category-team",
+      name: "Category Request Team",
+      role: "Category Request Operations Team",
+      areas: ["Category renovation", "Request assessment", "Timelines"],
+      contact: "kwpopinlei@CTRCHINA.CN",
+    },
+    {
+      id: "dicc-mali",
+      name: "Ma Li",
+      role: "DICC Lead",
+      areas: ["DICC rules", "Product definitions", "Category fields"],
+      contact: "For DICC rule enquiries",
+    },
+    {
+      id: "dp-chenjin",
+      name: "Chen Jin",
+      role: "DP Manager",
+      areas: ["Data Process", "DICC / DP management"],
+      contact: "For DP escalations",
+    },
+    {
+      id: "platform-zhangzhirong",
+      name: "Zhang Zhirong",
+      role: "New Product Confirmation Platform Contact",
+      areas: ["Platform access", "Download limits", "DICC new-product confirmation"],
+      contact: "Platform support contact",
+    },
+    {
+      id: "rp-team",
+      name: "RP Team",
+      role: "Report Production",
+      areas: ["PV/WPO database production", "Production requests", "Database QC"],
+      contact: "Coordinate through the production workflow or HD",
+    },
+  ],
+  questions: [
+    {
+      id: "q1",
+      title: "How should Oreo be mapped within the HHP biscuit category?",
+      body: "The initial version follows the confirmed example: HHP > Food > Snacks > Biscuits.",
+      answer: "The client brand is Oreo and the parent company is Mondelez. The complete client list can be maintained in the clients collection in data.js.",
+      status: "Answered",
+      tags: ["HHP", "Client Mapping", "Biscuits"],
+      answeredById: "hd-luowei",
+    },
+    {
+      id: "q2",
+      title: "How long does it take to provide PV after a DICC change?",
+      body: "The Operations training states that data adjustment plus PV delivery normally takes seven working days after Editing receives the completed DICC change request.",
+      answer: "For special cases, the timeline should be planned according to request volume and urgency.",
+      status: "Answered",
+      tags: ["DICC", "PV", "Editing"],
+      answeredById: "rp-team",
+    },
+    {
+      id: "q3",
+      title: "What is the difference between a Consumer Panel and Retail Audit?",
+      body: "Clients often compare Panel data with retail audit, shipment, or Nielsen data.",
+      answer: "Retail Audit tracks sales through stores, while a Consumer Panel tracks buyer behavior through households or individuals. Panels answer who buys, penetration, loyalty, repeat purchase, and repertoire questions; retail audits are stronger for store sales, pricing, promotion, and distribution.",
+      status: "Answered",
+      tags: ["Retail Audit", "Consumer Panel", "Data Differences"],
+      answeredById: "dp-chenjin",
+    },
+    {
+      id: "q4",
+      title: "How do we explain a difference between our sales estimate and client shipments?",
+      body: "Panel purchase data may differ from shipment or ex-factory data.",
+      answer: "First align the Universe, channels, geography, time period, and units, then check Pickup stability. Use a rolling basis such as 3/6/12 months or 52 weeks. Differences can arise from pipeline stock, parallel imports or exports, cross-region wholesale, out-of-home consumption, channel coverage, or sampling error.",
+      status: "Answered",
+      tags: ["Pickup", "Shipment", "Ex-factory"],
+      answeredById: "dp-chenjin",
+    },
+    {
+      id: "q5",
+      title: "When should highly segmented data not be interpreted directly?",
+      body: "New joiners often want to cut data to very granular provinces, channels, brands, or SKUs.",
+      answer: "Panel training emphasizes sample size and observations. The 100 observations guideline can be used as a practical reference: more observations generally produce more stable results, and variables such as Penetration are typically more stable than purchase volume. Interpret low-sample or low-penetration brand trends with caution.",
+      status: "Answered",
+      tags: ["100 observations", "Penetration", "Sample Stability"],
+      answeredById: "rp-team",
+    },
+  ],
+};
+
+</script>
+<script>
+const savedLanguage = localStorage.getItem("portalLanguage");
+let data;
+
+const translations = {
+  zh: {
+    brandHome: "返回首页门户",
+    brandTagline: "A CTR SERVICE IN CHINA · 内部新人自驱上岗门户",
+    mainNavigation: "主导航",
+    languageSwitch: "语言切换",
+    navHome: "首页门户",
+    navPanels: "1. 公司 Panel 架构",
+    navWorkflow: "2. 业务流转流程",
+    navLearning: "3. 核心学习资料",
+    navQa: "4. 答疑解惑论坛",
+    officialReference: "官网风格参考",
+    heroTitle: "深度洞察消费者，<br />塑造品牌未来",
+    heroDescription: "纽锐拓消费者指数介绍呈献：快速上手工作、明确品类客户流传、解答跑数疑难。这里是新入职同仁自驱动上岗的一站式知识大本营。",
+    globalSearch: "搜索工作流、消费者样组、核心文档、负责人（如：HHP、DICC、PV、罗微）...",
+    quickSuggestions: "快捷入口 / Quick Suggestions:",
+    quickSuggestionsAria: "快捷入口",
+    quickHhp: "HHP样组",
+    quickInternal: "对内流程",
+    quickInternalSearch: "对内流程",
+    quickChanges: "数据修改4步骤",
+    quickChangesSearch: "数据修改",
+    quickDicc: "马丽 DICC",
+    quickDiccSearch: "马丽",
+    quickPv: "PV 跑数",
+    quickShopper: "Shopper报告",
+    corePortalsTitle: "四大核心业务板块 / Core Portals",
+    corePortalsDescription: "点击下方对应板块入口，直接跳转功能区研究详细内容与实操步骤。",
+    panelCardTitle: "1. 公司 Panel 架构及核心覆盖",
+    panelCardDescription: "深入理解家庭样组(HHP)、生鲜样组(Fresh Food Panel)、户外消费(OOH)、婴儿(Baby Panel / KidsP)、美妆(BTP)、Usage 和 Comtech 七大消费者样组属性，内置品类合作客户快速检索。",
+    panelCardAction: "进入该板块探索 Panel 详情 →",
+    workflowCardTitle: "2. 业务流转流程与实操工作大盘",
+    workflowCardDescription: "解析端到端大流程：从 DICC、生产需求单、Operations 跑数、PV/WPO 数据库到 Sanity Check 校验与客户口径交付。",
+    workflowCardAction: "查看对内及对外流转节点 →",
+    learningCardTitle: "3. 核心工具资料与内网公盘目录",
+    learningCardDescription: "汇总学习中心 / 云学堂、生产需求单模板、WPO 文档、新品确认平台，以及 CTR 发布的行业趋势 Shopper 研究。",
+    learningCardAction: "前往公盘资源中心 →",
+    qaCardTitle: "4. 答疑解惑论坛及行业 Expert 分布",
+    qaCardDescription: "公开各样组负责对接人和 Expert 老师，内置讨论区，新同事可以沉淀问题并快速找到负责人。",
+    qaCardAction: "向 Expert 及 AI 顾问提问 →",
+    panelsHeroTitle: "1. 公司消费者样组(Panel)属性架构",
+    panelsHeroDescription: "为您深入呈现家庭样组(HHP)、生鲜样组(Fresh Food Panel)、户外消费(OOH)、婴儿(Baby Panel / KidsP)、美妆(BTP)、Usage 和 Comtech 七大消费者样组。",
+    backHome: "← 返回门户首页",
+    panelsSectionTitle: "公司 Panel 架构及核心覆盖",
+    panelsSectionDescription: "Worldpanel by Numerator 通过科学且具代表性的连续性消费者样组，真实还原消费习惯，赋能快消零售决策。",
+    clientsTitle: "当前精品合作客户代表 / Covered Representative Clients",
+    clientsDescription: "PPT 未提供完整客户映射，初版先放明确示例，后续可在数据表中持续补充。",
+    clientSearch: "搜索客户品牌、母公司、品类...",
+    categoryTree: "品类树",
+    panelFacts: "Panel 快速事实",
+    workflowHeroTitle: "2. 业务流转流程与实操工作大盘",
+    workflowHeroDescription: "对内看 DICC、生产需求单、RP、PV/WPO 到数据交付；对外看客户 request 到数据交付和反馈闭环。",
+    internalWorkflow: "对内流程",
+    externalWorkflow: "对外流程",
+    learningHeroTitle: "3. 核心工具资料与内网公盘目录",
+    learningHeroDescription: "工具资料解决“怎么做”，Insight 资料解决“怎么看、怎么讲出洞察”。",
+    allResources: "全部",
+    toolResources: "工具资料",
+    insightResources: "Insight 提升",
+    resourceSearch: "搜索资料、标签、路径...",
+    qaHeroTitle: "4. 答疑解惑论坛及行业 Expert 分布",
+    qaHeroDescription: "先找到负责人，再把问题沉淀成可复用答案。初版提问保存在当前浏览器。",
+    contactIndex: "负责人索引",
+    contactSearch: "搜索负责人、领域、工具...",
+    allStatuses: "全部状态",
+    pendingStatus: "待回答",
+    answeredStatus: "已回答",
+    updateStatus: "需更新",
+    questionTitle: "问题标题",
+    questionBody: "描述你的问题、Panel、品类、客户或数据背景",
+    submitQuestion: "提交问题",
+    scope: "样组属性 / Scope",
+    sampleSize: "样本体量 / Sample Size",
+    projection: "全国代表 / Projection",
+    cycle: "采集周期 / Cycle",
+    cities: "城市覆盖 / Cities",
+    profilePlanning: "样本画像规划 / Profile Planning",
+    emptyCategories: "该 Panel 的品类树待补充。",
+    emptyClients: "暂未找到客户。后续可在 data.js 中维护客户映射。",
+    input: "输入：",
+    action: "动作：",
+    output: "输出：",
+    resourceTool: "工具资料",
+    resourceInsight: "Insight 提升",
+    copyPath: "复制公盘路径",
+    copied: "已复制",
+    emptyResources: "没有找到匹配资料。",
+    emptyContacts: "没有找到负责人。",
+    answer: "答复：",
+    waitingAnswer: "等待负责人答复",
+    emptyQuestions: "暂无问题。",
+    localTag: "本地提交",
+  },
+  en: {
+    brandHome: "Return to the portal home",
+    brandTagline: "A CTR SERVICE IN CHINA · NEW JOINER ONBOARDING PORTAL",
+    mainNavigation: "Main navigation",
+    languageSwitch: "Language switch",
+    navHome: "Portal Home",
+    navPanels: "1. Company Panels",
+    navWorkflow: "2. Workflows",
+    navLearning: "3. Learning Resources",
+    navQa: "4. Q&A Forum",
+    officialReference: "Official Site",
+    heroTitle: "Understand Shoppers Deeply,<br />Shape the Future of Brands",
+    heroDescription: "A Worldpanel by Numerator China onboarding hub for learning the work, understanding category and client flows, and resolving data questions.",
+    globalSearch: "Search workflows, panels, core documents, or owners (e.g. HHP, DICC, PV, Luo Wei)...",
+    quickSuggestions: "Quick Suggestions:",
+    quickSuggestionsAria: "Quick suggestions",
+    quickHhp: "HHP Panel",
+    quickInternal: "Internal Workflow",
+    quickInternalSearch: "internal workflow",
+    quickChanges: "4-Step Data Change",
+    quickChangesSearch: "data change",
+    quickDicc: "Ma Li · DICC",
+    quickDiccSearch: "Ma Li",
+    quickPv: "PV Data Run",
+    quickShopper: "Shopper Reports",
+    corePortalsTitle: "Four Core Business Portals",
+    corePortalsDescription: "Select a portal below to explore detailed content and practical operating steps.",
+    panelCardTitle: "1. Company Panel Structure and Coverage",
+    panelCardDescription: "Understand the seven consumer panels: HHP, Fresh Food, OOH, Baby / KidsP, BTP, Usage, and Comtech, with fast client and category search.",
+    panelCardAction: "Explore Panel details →",
+    workflowCardTitle: "2. Business Workflows and Operating Guide",
+    workflowCardDescription: "Follow the end-to-end flow from DICC and production requests through Operations, PV/WPO databases, Sanity Checks, and client delivery.",
+    workflowCardAction: "View internal and external steps →",
+    learningCardTitle: "3. Core Tools and Shared-Drive Resources",
+    learningCardDescription: "Access the Learning Center / Yunxuetang, production templates, WPO documents, the new-product platform, and CTR Shopper trend research.",
+    learningCardAction: "Open the resource center →",
+    qaCardTitle: "4. Q&A Forum and Expert Directory",
+    qaCardDescription: "Find the right panel owner or expert and capture reusable answers in the built-in discussion area.",
+    qaCardAction: "Ask an Expert or AI advisor →",
+    panelsHeroTitle: "1. Company Consumer Panel Structure",
+    panelsHeroDescription: "Explore the seven core consumer panels: HHP, Fresh Food, OOH, Baby / KidsP, BTP, Usage, and Comtech.",
+    backHome: "← Back to Portal Home",
+    panelsSectionTitle: "Company Panel Structure and Core Coverage",
+    panelsSectionDescription: "Worldpanel by Numerator uses scientific, representative continuous consumer panels to reveal real purchasing behavior and power FMCG and retail decisions.",
+    clientsTitle: "Covered Representative Clients",
+    clientsDescription: "The supplied slides do not contain a complete client map. The first version uses confirmed examples and can be extended in the data file.",
+    clientSearch: "Search client brand, parent company, or category...",
+    categoryTree: "Category Tree",
+    panelFacts: "Panel Quick Facts",
+    workflowHeroTitle: "2. Business Workflows and Operating Guide",
+    workflowHeroDescription: "Internally, follow DICC, production requests, RP, PV/WPO, and delivery. Externally, move from client request to delivery and feedback.",
+    internalWorkflow: "Internal Workflow",
+    externalWorkflow: "External Workflow",
+    learningHeroTitle: "3. Core Tools and Shared-Drive Resources",
+    learningHeroDescription: "Tool resources explain how to work; Insight resources explain how to interpret and communicate findings.",
+    allResources: "All",
+    toolResources: "Tools",
+    insightResources: "Insight Development",
+    resourceSearch: "Search resources, tags, or paths...",
+    qaHeroTitle: "4. Q&A Forum and Expert Directory",
+    qaHeroDescription: "Find the right owner, then turn each question into a reusable answer. New questions are stored in this browser.",
+    contactIndex: "Owner Directory",
+    contactSearch: "Search owner, expertise, or tool...",
+    allStatuses: "All Statuses",
+    pendingStatus: "Pending",
+    answeredStatus: "Answered",
+    updateStatus: "Needs Update",
+    questionTitle: "Question title",
+    questionBody: "Describe your question, panel, category, client, or data context",
+    submitQuestion: "Submit Question",
+    scope: "Panel Scope",
+    sampleSize: "Sample Size",
+    projection: "Projection",
+    cycle: "Collection Cycle",
+    cities: "City Coverage",
+    profilePlanning: "Sample Profile Planning",
+    emptyCategories: "The category tree for this Panel will be added later.",
+    emptyClients: "No clients found. Client mappings can be maintained in data.js.",
+    input: "Input: ",
+    action: "Action: ",
+    output: "Output: ",
+    resourceTool: "Tool Resource",
+    resourceInsight: "Insight Development",
+    copyPath: "Copy Shared-Drive Path",
+    copied: "Copied",
+    emptyResources: "No matching resources found.",
+    emptyContacts: "No owner found.",
+    answer: "Answer: ",
+    waitingAnswer: "Waiting for an owner to respond",
+    emptyQuestions: "No questions yet.",
+    localTag: "Local Submission",
+  },
+};
+
+const state = {
+  language: savedLanguage === "en" ? "en" : "zh",
+  view: "home",
+  panelId: "hhp",
+  workflowType: "internal",
+  workflowStep: 0,
+  resourceGroup: "all",
+  search: "",
+};
+
+data = state.language === "en" ? window.portalDataEn : window.portalData;
+
+const $ = (selector) => document.querySelector(selector);
+const $ = (selector) => Array.from(document.querySelectorAll(selector));
+
+function t(key) {
+  return translations[state.language][key] || translations.zh[key] || key;
+}
+
+function applyTranslations() {
+  document.documentElement.lang = state.language === "en" ? "en" : "zh-CN";
+  $('[data-i18n]').forEach((element) => {
+    element.textContent = t(element.dataset.i18n);
+  });
+  $('[data-i18n-html]').forEach((element) => {
+    element.innerHTML = t(element.dataset.i18nHtml);
+  });
+  $('[data-i18n-placeholder]').forEach((element) => {
+    element.placeholder = t(element.dataset.i18nPlaceholder);
+  });
+  $('[data-i18n-aria]').forEach((element) => {
+    element.setAttribute("aria-label", t(element.dataset.i18nAria));
+  });
+  $('[data-i18n-search]').forEach((element) => {
+    element.dataset.searchTerm = t(element.dataset.i18nSearch);
+  });
+  $('[data-language]').forEach((button) => {
+    button.classList.toggle("active", button.dataset.language === state.language);
+  });
+}
+
+function includesText(value, term) {
+  if (!term) return true;
+  return String(value || "").toLowerCase().includes(term.toLowerCase());
+}
+
+function showView(view) {
+  state.view = view;
+  $(".view").forEach((section) => section.classList.toggle("active", section.dataset.view === view));
+  $("[data-target-view]").forEach((item) => item.classList.toggle("active", item.dataset.targetView === view));
+  if (view !== "home") {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+function tags(items) {
+  return `<div class="tag-row">${items.map((item) => `<span class="tag">${item}</span>`).join("")}</div>`;
+}
+
+function renderPortalCards() {
+  $(".portal-card").forEach((card) => {
+    const go = () => showView(card.dataset.targetView);
+    card.addEventListener("click", go);
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        go();
+      }
+    });
+  });
+}
+
+function renderPanels() {
+  const panelList = $("#panelList");
+  panelList.innerHTML = data.panels
+    .map((panel) => `<button type="button" class="${panel.id === state.panelId ? "active" : ""}" data-panel-id="${panel.id}">${panel.name}<br><small>${panel.shortName}</small></button>`)
+    .join("");
+
+  panelList.querySelectorAll("button").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.panelId = button.dataset.panelId;
+      renderPanels();
+    });
+  });
+
+  const panel = data.panels.find((item) => item.id === state.panelId);
+  $("#panelDetail").className = "info-panel highlight";
+  $("#panelDetail").innerHTML = `
+    <p class="eyebrow">${t("scope")}</p>
+    <h2>${panel.name} <small>(${panel.englishName})</small></h2>
+    <p>${panel.summary}</p>
+    ${tags([panel.shortName, panel.collection, panel.coverage])}
+  `;
+
+  $("#panelFacts").innerHTML = [
+    [t("sampleSize"), panel.sample],
+    [t("projection"), panel.projection],
+    [t("cycle"), panel.cycle],
+    [t("cities"), panel.cities],
+    ...(panel.profileDimensions
+      ? [[t("profilePlanning"), panel.profileDimensions.join(" · ")]]
+      : []),
+  ]
+    .map(([label, value]) => `<div class="fact"><span>${label}</span><strong>${value}</strong></div>`)
+    .join("");
+
+  renderCategories();
+  renderClients();
+}
+
+function renderCategories() {
+  const categories = data.categories.filter((category) => category.panelId === state.panelId);
+  $("#categoryTree").innerHTML =
+    categories
+      .map((category) => {
+        const depth = category.parentId ? 1 : 0;
+        return `<div class="tree-item" style="margin-left:${depth * 18}px"><strong>${category.name}</strong><br><span class="muted">${category.description}</span></div>`;
+      })
+      .join("") || `<div class="empty">${t("emptyCategories")}</div>`;
+}
+
+function renderClients() {
+  const term = $("#clientSearch")?.value.trim() || "";
+  const clients = data.clients.filter((client) => {
+    const searchable = [client.name, client.company, client.notes].join(" ");
+    return client.panelIds.includes(state.panelId) && includesText(searchable, term);
+  });
+  $("#clientList").innerHTML =
+    clients
+      .map((client) => {
+        const categoryNames = client.categoryIds
+          .map((id) => data.categories.find((category) => category.id === id)?.name)
+          .filter(Boolean);
+        return `<div class="list-item"><strong>${client.name}</strong> <span class="muted">(${client.company})</span><p>${client.notes}</p>${tags(categoryNames)}</div>`;
+      })
+      .join("") || `<div class="empty">${t("emptyClients")}</div>`;
+}
+
+function renderWorkflow() {
+  const workflow = data.workflows.find((item) => item.type === state.workflowType);
+  const step = workflow.steps[state.workflowStep] || workflow.steps[0];
+
+  $("#workflowSteps").innerHTML = workflow.steps
+    .map((item, index) => `<button type="button" class="timeline-step ${index === state.workflowStep ? "active" : ""}" data-step="${index}"><span>${index + 1}</span><strong>${item.title}</strong></button>`)
+    .join("");
+
+  $("#workflowSteps").querySelectorAll("button").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.workflowStep = Number(button.dataset.step);
+      renderWorkflow();
+    });
+  });
+
+  $("#workflowDetail").innerHTML = `
+    <p class="eyebrow">${workflow.title}</p>
+    <h2>${step.title}</h2>
+    <p><strong>${t("input")}</strong>${step.input}</p>
+    <p><strong>${t("action")}</strong>${step.action}</p>
+    <p><strong>${t("output")}</strong>${step.output}</p>
+    ${tags(step.tools)}
+  `;
+}
+
+function renderResources() {
+  const term = $("#resourceSearch")?.value.trim() || "";
+  const resources = data.resources.filter((resource) => {
+    const groupMatch = state.resourceGroup === "all" || resource.group === state.resourceGroup;
+    const searchable = [resource.title, resource.description, resource.path, resource.tags.join(" ")].join(" ");
+    return groupMatch && includesText(searchable, term);
+  });
+  $("#resourceList").innerHTML =
+    resources
+      .map((resource) => `<article class="resource-card"><p class="eyebrow">${resource.group === "tool" ? t("resourceTool") : t("resourceInsight")}</p><h3>${resource.title}</h3><p>${resource.description}</p><p class="muted">${resource.path}</p>${resource.copyPath ? `<button type="button" class="copy-button" data-copy-path="${resource.copyPath}">${t("copyPath")}</button>` : ""}${tags([...resource.tags, resource.level])}</article>`)
+      .join("") || `<div class="empty">${t("emptyResources")}</div>`;
+
+  $("#resourceList").querySelectorAll("[data-copy-path]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const value = button.dataset.copyPath;
+      try {
+        await navigator.clipboard.writeText(value);
+      } catch {
+        const textarea = document.createElement("textarea");
+        textarea.value = value;
+        document.body.append(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        textarea.remove();
+      }
+      button.textContent = t("copied");
+      window.setTimeout(() => {
+        button.textContent = t("copyPath");
+      }, 1400);
+    });
+  });
+}
+
+function storedQuestions() {
+  try {
+    return JSON.parse(localStorage.getItem("portalQuestions") || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function renderContacts() {
+  const term = $("#contactSearch")?.value.trim() || "";
+  const contacts = data.contacts.filter((contact) => includesText([contact.name, contact.role, contact.contact, contact.areas.join(" ")].join(" "), term));
+  $("#contactList").innerHTML =
+    contacts
+      .map((contact) => `<article class="contact-card"><h3>${contact.name}</h3><p><strong>${contact.role}</strong></p><p class="muted">${contact.contact}</p>${tags(contact.areas)}</article>`)
+      .join("") || `<div class="empty">${t("emptyContacts")}</div>`;
+}
+
+function questionStatusKey(status) {
+  if (status === "待回答" || status === "Pending") return "pending";
+  if (status === "需更新" || status === "Needs Update") return "update";
+  return "answered";
+}
+
+function localizedQuestionStatus(status) {
+  return t(`${questionStatusKey(status)}Status`);
+}
+
+function renderQuestions() {
+  const status = $("#questionStatus")?.value || "all";
+  const questions = [...data.questions, ...storedQuestions()].filter((question) => status === "all" || questionStatusKey(question.status) === status);
+  $("#questionList").innerHTML =
+    questions
+      .map((question) => `<article class="question-card"><h3>${question.title}</h3><p>${question.body}</p><p><strong>${t("answer")}</strong>${question.answer || t("waitingAnswer")}</p>${tags([localizedQuestionStatus(question.status), ...(question.tags || [])])}</article>`)
+      .join("") || `<div class="empty">${t("emptyQuestions")}</div>`;
+}
+
+function setLanguage(language) {
+  state.language = language === "en" ? "en" : "zh";
+  data = state.language === "en" ? window.portalDataEn : window.portalData;
+  localStorage.setItem("portalLanguage", state.language);
+  applyTranslations();
+  renderPanels();
+  renderWorkflow();
+  renderResources();
+  renderContacts();
+  renderQuestions();
+}
+
+function bindEvents() {
+  $('[data-language]').forEach((button) => {
+    button.addEventListener("click", () => setLanguage(button.dataset.language));
+  });
+
+  $("[data-target-view]").forEach((item) => {
+    item.addEventListener("click", () => showView(item.dataset.targetView));
+  });
+
+  $("[data-workflow-type='internal']").addEventListener("click", () => {
+    state.workflowType = "internal";
+    state.workflowStep = 0;
+    $("[data-workflow-type]").forEach((button) => button.classList.toggle("active", button.dataset.workflowType === "internal"));
+    renderWorkflow();
+  });
+  $("[data-workflow-type='external']").addEventListener("click", () => {
+    state.workflowType = "external";
+    state.workflowStep = 0;
+    $("[data-workflow-type]").forEach((button) => button.classList.toggle("active", button.dataset.workflowType === "external"));
+    renderWorkflow();
+  });
+
+  $("[data-resource-group]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.resourceGroup = button.dataset.resourceGroup;
+      $("[data-resource-group]").forEach((item) => item.classList.toggle("active", item === button));
+      renderResources();
+    });
+  });
+
+  $("#clientSearch").addEventListener("input", renderClients);
+  $("#resourceSearch").addEventListener("input", renderResources);
+  $("#contactSearch").addEventListener("input", renderContacts);
+  $("#questionStatus").addEventListener("change", renderQuestions);
+
+  $("#globalSearch").addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") return;
+    const term = event.currentTarget.value.trim();
+    state.search = term;
+    if (/dicc|pv|wpo|流程|workflow|request|confirm|修改|change/i.test(term)) showView("workflow");
+    else if (/shopper|学习|learning|资料|resource|模板|report/i.test(term)) showView("learning");
+    else if (/罗微|刘倩|刘一然|马丽|luo wei|liu qian|liu yiran|ma li|负责人|owner|答疑|q&a/i.test(term)) showView("qa");
+    else showView("panels");
+  });
+
+  $("[data-search-term]").forEach((button) => {
+    button.addEventListener("click", () => {
+      $("#globalSearch").value = button.dataset.searchTerm;
+      $("#globalSearch").dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+    });
+  });
+
+  $("#questionForm").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const title = $("#questionTitle").value.trim();
+    const body = $("#questionBody").value.trim();
+    if (!title || !body) return;
+    const next = {
+      id: `local-${Date.now()}`,
+      title,
+      body,
+      answer: "",
+      status: "待回答",
+      tags: ["本地提交"],
+      answeredById: "",
+    };
+    const questions = storedQuestions();
+    questions.unshift(next);
+    localStorage.setItem("portalQuestions", JSON.stringify(questions));
+    event.currentTarget.reset();
+    renderQuestions();
+  });
+}
+
+function init() {
+  applyTranslations();
+  renderPortalCards();
+  renderPanels();
+  renderWorkflow();
+  renderResources();
+  renderContacts();
+  renderQuestions();
+  bindEvents();
+  showView("home");
+}
+
+document.addEventListener("DOMContentLoaded", init);
+
+</script>
+  </body>
+</html>
