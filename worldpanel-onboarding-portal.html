@@ -2054,7 +2054,7 @@ const state = {
 data = state.language === "en" ? window.portalDataEn : window.portalData;
 
 const $ = (selector) => document.querySelector(selector);
-const $ = (selector) => Array.from(document.querySelectorAll(selector));
+const $$ = (selector) => Array.from(document.querySelectorAll(selector));
 
 function t(key) {
   return translations[state.language][key] || translations.zh[key] || key;
@@ -2062,22 +2062,22 @@ function t(key) {
 
 function applyTranslations() {
   document.documentElement.lang = state.language === "en" ? "en" : "zh-CN";
-  $('[data-i18n]').forEach((element) => {
+  $$('[data-i18n]').forEach((element) => {
     element.textContent = t(element.dataset.i18n);
   });
-  $('[data-i18n-html]').forEach((element) => {
+  $$('[data-i18n-html]').forEach((element) => {
     element.innerHTML = t(element.dataset.i18nHtml);
   });
-  $('[data-i18n-placeholder]').forEach((element) => {
+  $$('[data-i18n-placeholder]').forEach((element) => {
     element.placeholder = t(element.dataset.i18nPlaceholder);
   });
-  $('[data-i18n-aria]').forEach((element) => {
+  $$('[data-i18n-aria]').forEach((element) => {
     element.setAttribute("aria-label", t(element.dataset.i18nAria));
   });
-  $('[data-i18n-search]').forEach((element) => {
+  $$('[data-i18n-search]').forEach((element) => {
     element.dataset.searchTerm = t(element.dataset.i18nSearch);
   });
-  $('[data-language]').forEach((button) => {
+  $$('[data-language]').forEach((button) => {
     button.classList.toggle("active", button.dataset.language === state.language);
   });
 }
@@ -2089,8 +2089,8 @@ function includesText(value, term) {
 
 function showView(view) {
   state.view = view;
-  $(".view").forEach((section) => section.classList.toggle("active", section.dataset.view === view));
-  $("[data-target-view]").forEach((item) => item.classList.toggle("active", item.dataset.targetView === view));
+  $$(".view").forEach((section) => section.classList.toggle("active", section.dataset.view === view));
+  $$("[data-target-view]").forEach((item) => item.classList.toggle("active", item.dataset.targetView === view));
   if (view !== "home") {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -2101,7 +2101,7 @@ function tags(items) {
 }
 
 function renderPortalCards() {
-  $(".portal-card").forEach((card) => {
+  $$(".portal-card").forEach((card) => {
     const go = () => showView(card.dataset.targetView);
     card.addEventListener("click", go);
     card.addEventListener("keydown", (event) => {
@@ -2286,31 +2286,31 @@ function setLanguage(language) {
 }
 
 function bindEvents() {
-  $('[data-language]').forEach((button) => {
+  $$('[data-language]').forEach((button) => {
     button.addEventListener("click", () => setLanguage(button.dataset.language));
   });
 
-  $("[data-target-view]").forEach((item) => {
+  $$("[data-target-view]").forEach((item) => {
     item.addEventListener("click", () => showView(item.dataset.targetView));
   });
 
   $("[data-workflow-type='internal']").addEventListener("click", () => {
     state.workflowType = "internal";
     state.workflowStep = 0;
-    $("[data-workflow-type]").forEach((button) => button.classList.toggle("active", button.dataset.workflowType === "internal"));
+    $$("[data-workflow-type]").forEach((button) => button.classList.toggle("active", button.dataset.workflowType === "internal"));
     renderWorkflow();
   });
   $("[data-workflow-type='external']").addEventListener("click", () => {
     state.workflowType = "external";
     state.workflowStep = 0;
-    $("[data-workflow-type]").forEach((button) => button.classList.toggle("active", button.dataset.workflowType === "external"));
+    $$("[data-workflow-type]").forEach((button) => button.classList.toggle("active", button.dataset.workflowType === "external"));
     renderWorkflow();
   });
 
-  $("[data-resource-group]").forEach((button) => {
+  $$("[data-resource-group]").forEach((button) => {
     button.addEventListener("click", () => {
       state.resourceGroup = button.dataset.resourceGroup;
-      $("[data-resource-group]").forEach((item) => item.classList.toggle("active", item === button));
+      $$("[data-resource-group]").forEach((item) => item.classList.toggle("active", item === button));
       renderResources();
     });
   });
@@ -2330,7 +2330,7 @@ function bindEvents() {
     else showView("panels");
   });
 
-  $("[data-search-term]").forEach((button) => {
+  $$("[data-search-term]").forEach((button) => {
     button.addEventListener("click", () => {
       $("#globalSearch").value = button.dataset.searchTerm;
       $("#globalSearch").dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
